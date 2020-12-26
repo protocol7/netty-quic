@@ -39,6 +39,8 @@ public abstract class CryptoContext {
         switch (cipherSuite) {
             case "TLS_AES_128_GCM_SHA256":
                 return new TLS_AES_128_GCM_SHA256(connectionID, isServer);
+            case "TLS_AES_256_GCM_SHA384":
+                return new TLS_AES_256_GCM_SHA384(connectionID, isServer);
             default:
                 throw new NoSuchAlgorithmException(cipherSuite);
         }
@@ -58,6 +60,8 @@ public abstract class CryptoContext {
         switch (cipherSuite) {
             case "TLS_AES_128_GCM_SHA256":
                 return new TLS_AES_128_GCM_SHA256(writeKey, readKey);
+            case "TLS_AES_256_GCM_SHA384":
+                return new TLS_AES_256_GCM_SHA384(writeKey, readKey);
             default:
                 throw new NoSuchAlgorithmException(cipherSuite);
         }

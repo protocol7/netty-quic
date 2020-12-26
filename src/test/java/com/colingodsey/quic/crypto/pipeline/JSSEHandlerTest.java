@@ -17,6 +17,7 @@ import com.colingodsey.quic.utils.TestSSLContext;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.openjsse.javax.net.ssl.SSLEngine;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class JSSEHandlerTest {

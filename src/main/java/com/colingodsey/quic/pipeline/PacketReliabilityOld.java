@@ -21,10 +21,6 @@ import com.colingodsey.quic.packet.frame.Ack;
 import com.colingodsey.quic.packet.frame.Frame;
 
 import com.colingodsey.quic.utils.Tuple;
-import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
 
 
 /*
@@ -45,7 +41,6 @@ Lets make packets into containers again. Calculate strict lengths, frames too.
  */
 public class PacketReliabilityOld extends ChannelDuplexHandler {
     final Queue<Tuple<Frame, ChannelPromise>> frameQueue = new ArrayDeque<>();
-    final Long2ObjectMap<Packet> pendingPacks = new Long2ObjectOpenHashMap<>();
     final Packet.Type type;
 
     long packetNumber = 0;

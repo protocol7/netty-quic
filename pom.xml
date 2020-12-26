@@ -41,13 +41,7 @@
     <dependency>
       <groupId>org.openjsse</groupId>
       <artifactId>openjsse</artifactId>
-      <version>1.1.1-QUIC-SNAPSHOT</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>at.favre.lib</groupId>
-      <artifactId>hkdf</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.5-QUIC-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -89,7 +83,6 @@
           <target>${java.version}</target>
           <compilerArgs>
             <arg>-verbose</arg>
-            <arg>-Werror</arg>
             <arg>-Xlint:all,-options,-path</arg>
           </compilerArgs>
         </configuration>

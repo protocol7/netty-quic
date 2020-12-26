@@ -1,9 +1,5 @@
 package com.colingodsey.quic.crypto.context;
 
-import java.math.BigInteger;
-import java.security.GeneralSecurityException;
-import java.security.spec.AlgorithmParameterSpec;
-
 import com.colingodsey.quic.HKDF;
 import com.colingodsey.quic.packet.component.ConnectionID;
 
@@ -12,10 +8,13 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.math.BigInteger;
+import java.security.GeneralSecurityException;
+import java.security.spec.AlgorithmParameterSpec;
 
-public class TLS_AES_128_GCM_SHA256 extends CryptoContext {
-    static final int BITS = 128;
-    static final HKDF hkdf = HKDF.fromHmacSha256();
+public class TLS_AES_256_GCM_SHA384 extends CryptoContext {
+    static final int BITS = 256;
+    static final HKDF hkdf = HKDF.fromHmacSha384();
 
     final SecretKey wPayload;
     final IvParameterSpec wIV;
@@ -26,19 +25,19 @@ public class TLS_AES_128_GCM_SHA256 extends CryptoContext {
     final SecretKey rPayload;
     final IvParameterSpec rIV;
 
-    TLS_AES_128_GCM_SHA256(ConnectionID connectionID, boolean isServer) throws GeneralSecurityException {
+    TLS_AES_256_GCM_SHA384(ConnectionID connectionID, boolean isServer) throws GeneralSecurityException {
         this(new SecretKeySpec(
                 hkdf.extract(QUIC_V1_INITIAL_SALT, connectionID.getBytes()), "HKDF"), isServer);
     }
 
-    private TLS_AES_128_GCM_SHA256(SecretKey masterSecret, boolean isServer) throws GeneralSecurityException {
+    private TLS_AES_256_GCM_SHA384(SecretKey masterSecret, boolean isServer) throws GeneralSecurityException {
         this(
                 expandKey(masterSecret, !isServer ? QUIC_CLIENT_IN_LABEL : QUIC_SERVER_IN_LABEL),
                 expandKey(masterSecret, isServer  ? QUIC_CLIENT_IN_LABEL : QUIC_SERVER_IN_LABEL)
         );
     }
 
-    TLS_AES_128_GCM_SHA256(SecretKey encryptKey, SecretKey decryptKey) throws GeneralSecurityException {
+    TLS_AES_256_GCM_SHA384(SecretKey encryptKey, SecretKey decryptKey) throws GeneralSecurityException {
         payloadCipher = Cipher.getInstance("AES/GCM/NoPadding");
 
         wPayload = expandKey(encryptKey, QUIC_KEY_LABEL);

@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.colingodsey.quic.packet.frame.Frame;
 
-public class TestFrameCodec extends MessageToMessageCodec<ByteBuf, Frame> {
+public class    TestFrameCodec extends MessageToMessageCodec<ByteBuf, Frame> {
     protected void encode(ChannelHandlerContext ctx, Frame msg, List<Object> out) throws Exception {
         final ByteBuf buf = ctx.alloc().ioBuffer();
         msg.write(buf);

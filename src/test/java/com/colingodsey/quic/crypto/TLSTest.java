@@ -1,20 +1,19 @@
 package com.colingodsey.quic.crypto;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-
 import com.colingodsey.quic.utils.TestSSLContext;
+import org.junit.Test;
+import org.openjsse.javax.net.ssl.ExtendedSSLSession;
+import org.openjsse.javax.net.ssl.SSLParameters;
+
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLEngineResult;
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 import javax.net.ssl.SSLSession;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
-import org.junit.Test;
-import org.openjsse.javax.net.ssl.ExtendedSSLSession;
-import org.openjsse.javax.net.ssl.SSLParameters;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TLSTest {
     @Test
@@ -115,7 +114,8 @@ public class TLSTest {
 
         assertTrue(client.isOutboundDone());
         assertTrue(server.isInboundDone());
-        assertEquals("TLS_AES_128_GCM_SHA256", client.getSession().getCipherSuite());
+        assertEquals("TLS_AES_256_GCM_SHA384", client.getSession().getCipherSuite());
+        assertEquals("TLS_AES_256_GCM_SHA384", server.getSession().getCipherSuite());
 
         assertEquals(clientTPBytes, ((ExtendedSSLSession) server.getSession()).getQUICTransParams());
         assertEquals(serverTPBytes, ((ExtendedSSLSession) client.getSession()).getQUICTransParams());

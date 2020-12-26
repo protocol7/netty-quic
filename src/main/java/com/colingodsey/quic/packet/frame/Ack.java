@@ -8,6 +8,8 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.longs.LongConsumer;
 import it.unimi.dsi.fastutil.longs.LongSortedSet;
 
+import java.util.SortedSet;
+
 public class Ack implements Frame, Frame.Initial, Frame.Handshake {
     public static final int PACKET_ID = 0x02;
     private static final int[] EMPTY_INT_ARR = new int[0];
@@ -35,11 +37,11 @@ public class Ack implements Frame, Frame.Initial, Frame.Handshake {
         }
     }
 
-    public Ack(long lastLargest, LongSortedSet ackSet, long ackDelay) {
+    public Ack(long lastLargest, SortedSet<Long> ackSet, long ackDelay) {
         IntArrayList gaps = null;
         IntArrayList acks = null;
 
-        final long largestAckd = ackSet.firstLong();
+        final long largestAckd = ackSet.first();
         long cursor = largestAckd;
         int firstAck = 0;
         long rangeStart = 0;

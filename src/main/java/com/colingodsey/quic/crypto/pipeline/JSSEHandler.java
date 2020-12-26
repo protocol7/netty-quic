@@ -1,23 +1,15 @@
 package com.colingodsey.quic.crypto.pipeline;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-
-import java.nio.ByteBuffer;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import com.colingodsey.quic.QUIC;
 import com.colingodsey.quic.crypto.TLS;
 import com.colingodsey.quic.crypto.context.CryptoContext;
 import com.colingodsey.quic.packet.Packet;
 import com.colingodsey.quic.packet.frame.Crypto;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import org.openjsse.javax.net.ssl.ExtendedSSLSession;
+import org.openjsse.javax.net.ssl.SSLParameters;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
@@ -26,9 +18,14 @@ import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 import javax.net.ssl.SSLEngineResult.Status;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
-
-import org.openjsse.javax.net.ssl.ExtendedSSLSession;
-import org.openjsse.javax.net.ssl.SSLParameters;
+import java.nio.ByteBuffer;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class JSSEHandler extends SimpleChannelInboundHandler<Crypto> {
     static final ExecutorService defaultBlockingExecutor = new ThreadPoolExecutor(
@@ -53,6 +50,7 @@ public class JSSEHandler extends SimpleChannelInboundHandler<Crypto> {
         engine = context.createSSLEngine();
         engine.setUseClientMode(false);
         engine.setWantClientAuth(true);
+
         this.blockingExecutor = backgroundExecutor == null ?
                 defaultBlockingExecutor : backgroundExecutor;
     }
@@ -216,7 +214,6 @@ public class JSSEHandler extends SimpleChannelInboundHandler<Crypto> {
             engine.setSSLParameters(sParams);
             flushedTransParams = true;
         }
-
         processHandshakeIteration(ctx);
 
         while (shouldWrap() || shouldUnwrap()) {
